@@ -1,9 +1,9 @@
 # A Robust Autoencoder Ensemble-Based Approach for Anomaly Detection in Text
-PyTorch implementation of Ensemble robust Local recovery Autoencoder (ErLA) considering randomly connected autoencoders for anomaly detection in text data.
-This repository presents experimental materials that can reproduces results from the original ECML 2024 paper.
+PyTorch implementation of Robust Subspace Local Recovery Autoencoder Ensemble (RoSAE) considering randomly connected autoencoders for anomaly detection in text data.
+This repository presents experimental materials that can reproduces results from the original work presented at COLING 2025 paper.
 
 ## Abstract
->*In this work, a robust autoencoder ensemble-based approach designed to address anomaly detection in text corpora is introduced. Each autoencoder within the ensemble incorporates a local robust sub- space recovery projection of the original data in its encoding embedding, leveraging the geometric properties of the k-nearest neighbors to opti- mize subspace recovery and identify anomalous patterns in textual data. The evaluation of such an approach needs an experimental setting dedi- cated to the context of textual anomaly detection. Thus, beforehand, a comprehensive real-world taxonomy is introduced to distinguish between independent anomalies and contextual anomalies. Such a study to iden- tify clearly the kinds of anomalies appearing in a textual context aims at addressing a critical gap in the existing literature. Then, extensive exper- iments on classical text corpora have been conducted and their results are presented that highlights the efficiency, both in robustness and in performance, of the robust autoencoder ensemble-based approach when detecting both independent and contextual anomalies. Diverse range of tasks, including classification, sentiment analysis, and spam detection, across eight different corpora, have been studied in these experiments.*
+>*Anomaly detection (AD) is a fast growing and popular domain among established applications like vision and time series. We observe a rich literature for these applications, but anomaly detection in text is only starting to blossom. Recently, self-supervised methods with self-attention mechanism have been the most popular choice. While recent works have proposed a working ground for building and benchmarking state of the art approaches, we propose two principal contributions in this paper: contextual anomaly contamination and a novel ensemble-based approach. Our method, Textual Anomaly Contamination (TAC), allows to contaminate inlier classes with either independent or contextual anomalies. In the literature, it appears that this distinction is not performed. For finding contextual anomalies, we propose RoSAE, a Robust Subspace Local Recovery Autoencoder Ensemble. All autoencoders of the ensemble present a different latent representation through local manifold learning. Benchmark shows that our approach outperforms recent works on both independent and contextual anomalies, while being more robust.*
 
 ## Requirements
 The code is compatible with `Python 3.8+` and every requirements can be found in `requirements.txt`.
@@ -21,10 +21,10 @@ While careful attention has been performed regarding gpu compatibility, we advis
 
 ## Handling corpora
 One of the key contribution of our work lies on the availability of numerous corpora from state of the art approaches, and furthermore.
-Thus we propose to use the `Datasets` library from [Hugging Face](https://huggingface.co/docs/datasets/index), our `ErLADataset` that handles all pre-processing and embedding steps, and PyOD `DataLoader`.
+Thus we propose to use the `Datasets` library from [Hugging Face](https://huggingface.co/docs/datasets/index), our `RoSAEDataset` that handles all pre-processing and embedding steps, and PyOD `DataLoader`.
 
 ### Available corpora
-Any corpus from Hugging Face is basically comaptible with our implementation but for this work we limit usage to corpora of our ECML 2024 subsmission.
+Any corpus from Hugging Face is basically compatible with our implementation but for this work we limit usage to corpora of our COLING 2025 subsmission.
 
 | **Corpus**     | **Task**           | **Documents (trn)** | **Topics** | **Hierarchy** | **Code label**        |
 |----------------|--------------------|:-------------:|:----------:|:-------------:|------------------|
@@ -51,20 +51,20 @@ While we have experimented numerous language models for text embedding, results 
 ### Important notes
 First, we highly recommend to use `sentence-roberta` for all experiments.
 Also, for each recorded result on one corpus we perform `NB_RUN * NB_TOPICS`, which can take a long time to perform.
-For avoiding to transform several times the same document, and for getting better run times, we transform one all the corpus and store it in the cache folder (default is `.tmp` of the `erla/` folder).
+For avoiding to transform several times the same document, and for getting better run times, we transform one all the corpus and store it in the cache folder (default is `.tmp` of the `rosae/` folder).
 Thus for a quick check of the results on one corpus, we advise to first run any experiment on smallest corpora.
 
 ## Running scripts
-We propose two scripts for reproducing our experimental setup: `benchmark` and `ablation_study` (`erla/exp/`).
+We propose two scripts for reproducing our experimental setup: `benchmark` and `ablation_study` (`rosae/exp/`).
 Both comes with command line implementation with useful options.
 For more advanced experiments, you can use your own instead through python imports.
 
 ### Benchmark
 ```bash
-python3 erla/exp/benchmark --corpus='dbpedia_14' --generation='independent' --embedding='distill-roberta' --runs=10 --cache='.tmp' --nu=0.1 --name="benchmark"
+python3 rosae/exp/benchmark --corpus='dbpedia_14' --generation='independent' --embedding='distill-roberta' --runs=10 --cache='.tmp' --nu=0.1 --name="benchmark"
 ```
 
-All results will be stored in a pandas dataframe in `erla/.tmp/results/benchmark.pickle`.
+All results will be stored in a pandas dataframe in `rosae/.tmp/results/benchmark.pickle`.
 An easy way for visualizing AUC and AP is:
 
 ```python
@@ -78,10 +78,10 @@ A lot more informations can be found in the dataframe.
 
 ### Ablation study
 ```bash
-python3 erla/exp/ablation_study --corpus='reuters' --generation='contextual' --embedding='distill-roberta' --runs=10 --cache='.tmp' --nu=0.1 --name='ablation_ensemble' --study='ensemble'
+python3 rosae/exp/ablation_study --corpus='reuters' --generation='contextual' --embedding='distill-roberta' --runs=10 --cache='.tmp' --nu=0.1 --name='ablation_ensemble' --study='ensemble'
 ```
 
-Similar to `benchmark`, the ablation study script will store study of ensemble properties (neighbours number and detector number) in `erla/.tmp/results/ablation_ensemble.pickle`.
+Similar to `benchmark`, the ablation study script will store study of ensemble properties (neighbours number and detector number) in `rosae/.tmp/results/ablation_ensemble.pickle`.
 
 The `--study` option can take four values:
 * `ensemble` study of ensemble components and *k* hyperparameter for LNE embedding
