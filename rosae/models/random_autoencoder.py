@@ -1,8 +1,8 @@
 from torch import nn
 import torch.nn.utils.prune as prune
 
-from erla.models.base_autoencoder import BaseAutoencoder
-from erla.utils.tools_neural_networks import activation_with_str
+from rosae.models.base_autoencoder import BaseAutoencoder
+from rosae.utils.tools_neural_networks import activation_with_str
 
 class RandomAutoencoder(BaseAutoencoder):
     def __init__(self,

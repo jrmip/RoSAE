@@ -5,7 +5,7 @@ import pandas as pd
 from pathlib import Path
 from datasets import load_dataset
 from joblib import Parallel, delayed
-from erla.utils.tools import create_if_not_exists, clean_text
+from rosae.utils.tools import create_if_not_exists, clean_text
 
 
 LOCAL_PATH = Path(__file__).resolve().parents[1]

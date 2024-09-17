@@ -3,7 +3,7 @@ import torch.nn as nn
 
 import numpy as np
 
-from erla.models.base_autoencoder import BaseAutoencoder
+from rosae.models.base_autoencoder import BaseAutoencoder
 
 from pyod.models.auto_encoder_torch import PyODDataset
 

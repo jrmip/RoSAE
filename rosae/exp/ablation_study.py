@@ -9,9 +9,9 @@ import pandas as pd
 
 from sklearn.metrics import roc_auc_score, average_precision_score
 
-from erla.models.ensemble import Ensemble
-from erla.models.lne_autoencoder import LNEAutoencoder
-from erla.data.erla_dataset import ErLADataset, AVAILABLE_DATASETS
+from rosae.models.ensemble import Ensemble
+from rosae.models.lne_autoencoder import LNEAutoencoder
+from rosae.data.rosae_dataset import RoSAEDataset, AVAILABLE_DATASETS
 
 from tqdm import tqdm
 from pathlib import Path
@@ -221,7 +221,7 @@ def run(corpus, generation, embedding, runs, cache, nu, name, study):
     Path(LOCAL_PATH / cache/ 'results').mkdir(parents=True, exist_ok=True)
 
     for run in tqdm(range(runs)):
-        ds = ErLADataset(
+        ds = RoSAEDataset(
             corpus,
             cache_folder=cache,
             generation=generation,
@@ -232,7 +232,7 @@ def run(corpus, generation, embedding, runs, cache, nu, name, study):
             min_size=100
         )
         try:
-            test = ErLADataset(
+            test = RoSAEDataset(
                 corpus,
                 cache_folder=cache,
                 generation=generation,
@@ -244,7 +244,7 @@ def run(corpus, generation, embedding, runs, cache, nu, name, study):
                 min_size=100
             )
         except:
-            test = ErLADataset(
+            test = RoSAEDataset(
                 corpus,
                 cache_folder=cache,
                 generation=generation,

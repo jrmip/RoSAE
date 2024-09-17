@@ -8,8 +8,8 @@ from tqdm import tqdm
 from pathlib import Path
 from torch.utils.data import Dataset
 
-from erla.utils.get_data import get_corpus
-from erla.models.embedding import Embedding
+from rosae.utils.get_data import get_corpus
+from rosae.models.embedding import Embedding
 
 LOCAL_PATH = Path(__file__).resolve().parents[1]
 
@@ -39,7 +39,7 @@ AVAILABLE_GENERATION = [
 ]
 
 
-class ErLADataset(Dataset):
+class RoSAEDataset(Dataset):
     def __init__(self,
                  dataset: str,
                  embedding: str = 'sentence-glove',

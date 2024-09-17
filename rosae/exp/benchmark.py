@@ -8,12 +8,12 @@ import pandas as pd
 
 from sklearn.metrics import roc_auc_score, average_precision_score
 
-from erla.models.ensemble import Ensemble
-from erla.models.lne_autoencoder import LNEAutoencoder
-from erla.models.base_autoencoder import BaseAutoencoder
-from erla.models.random_autoencoder import RandomAutoencoder
-from erla.data.erla_dataset import ErLADataset, AVAILABLE_DATASETS
-from erla.models.rsr_autoencoder import RobustSubspaceRecoveryAutoencoder
+from rosae.models.ensemble import Ensemble
+from rosae.models.lne_autoencoder import LNEAutoencoder
+from rosae.models.base_autoencoder import BaseAutoencoder
+from rosae.models.random_autoencoder import RandomAutoencoder
+from rosae.data.rosae_dataset import RoSAEDataset, AVAILABLE_DATASETS
+from rosae.models.rsr_autoencoder import RobustSubspaceRecoveryAutoencoder
 
 from tqdm import tqdm
 from pathlib import Path
@@ -132,7 +132,7 @@ def run(corpus, generation, embedding, runs, cache, nu, name):
     Path(LOCAL_PATH / cache/ 'results').mkdir(parents=True, exist_ok=True)
 
     for run in tqdm(range(runs)):
-        ds = ErLADataset(
+        ds = RoSAEDataset(
             corpus,
             cache_folder=cache,
             generation=generation,
@@ -143,7 +143,7 @@ def run(corpus, generation, embedding, runs, cache, nu, name):
             min_size=100
         )
         try:
-            test = ErLADataset(
+            test = RoSAEDataset(
                 corpus,
                 cache_folder=cache,
                 generation=generation,
@@ -155,7 +155,7 @@ def run(corpus, generation, embedding, runs, cache, nu, name):
                 min_size=100
             )
         except:
-            test = ErLADataset(
+            test = RoSAEDataset(
                 corpus,
                 cache_folder=cache,
                 generation=generation,

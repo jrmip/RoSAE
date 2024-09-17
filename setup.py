@@ -10,7 +10,7 @@ with open(path.join(this_directory, REQUIREMENTS_FILE), encoding='utf-8') as f:
     requirements = f.read().splitlines()
 
 setup(
-    name='erla',
+    name='rosae',
     version="0.1",
     description='Anomaly detection with robust autoencoders',
     author='',
